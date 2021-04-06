@@ -2,7 +2,7 @@ import React from 'react';
 
 const Slider = ({ name, x, y, r, fill, stroke, strokeWidth, 
                 updateParentWithMouseDown, updateParentWithMouseUp,
-                updateparentWithHover }) => {
+                updateParentWithHover }) => {
     
     return ( 
         <circle
@@ -15,8 +15,8 @@ const Slider = ({ name, x, y, r, fill, stroke, strokeWidth,
             strokeWidth={strokeWidth}
             onMouseDown={updateParentWithMouseDown}
             onMouseUp={updateParentWithMouseUp}
-            onMouseEnter={updateparentWithHover}
-            onMouseLeave={updateparentWithHover}
+            onMouseEnter={updateParentWithHover}
+            onMouseLeave={updateParentWithHover}
         />
      );
 }

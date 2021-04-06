@@ -1,11 +1,11 @@
-import { images0, images1, images2 } from './assets/img';
+import { images0, images1, images2, images3, images4, images5 } from './assets/img';
 const numSounds = 10;
-const numSoundCircles = 3;
+const numSoundCircles = 6;
 const numImagesPerCircle = 10;
 const canvasWidth = window.innerWidth;
 const canvasHeight = window.innerHeight;
 
-const images = [images0, images1, images2];
+const images = [images0, images1, images2, images3, images4, images5];
 
 
 const globalSettings = {
@@ -20,8 +20,8 @@ const globalSettings = {
         rotateSpeed : 0.5,
         numImages : numImagesPerCircle,
         imgTransitionSpeed : 3,
-        size : (canvasWidth/numSoundCircles/8),
-        leftOffset : (canvasWidth/numSoundCircles/2), 
+        size : (canvasWidth/numSoundCircles/4),
+        leftOffset : (canvasWidth/numSoundCircles/6), 
     },
 
     volumeControl : {
@@ -31,9 +31,9 @@ const globalSettings = {
         activeFill : '#FF00FF',
         stroke : '#000',
         strokeWidth : '2',
-        scaler : 5,
-        size : (canvasWidth/numSoundCircles)/5,
-        positionScaler : 2.0,
+        scaler : 3,
+        size : (canvasWidth/numSoundCircles)/3,
+        positionScaler : 1.4,
     },
     pitchControl : {
         type: 'pitch control',
@@ -42,9 +42,9 @@ const globalSettings = {
         activeFill : '#FFFF00',
         stroke : '#000',
         strokeWidth : '2',
-        scaler : 5,
-        size : (canvasWidth/numSoundCircles)/5,
-        positionScaler : 2.5,
+        scaler : 3,
+        size : (canvasWidth/numSoundCircles)/3,
+        positionScaler : 2.2,
     }
 
 

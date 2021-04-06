@@ -35,10 +35,10 @@ export const setTickTime = (tick) => {
     }
 }
 
-// export const getCurrentTickTime = (tick) => {
-//     return {
-//         type : MasterClockActionTypes.GET_CURRENT_TICK_TIME,
-//         tick
-//     }
-// }
+export const getCurrentTickTime = (tick) => {
+    return {
+        type : MasterClockActionTypes.GET_CURRENT_TICK_TIME,
+        tick
+    }
+}
 

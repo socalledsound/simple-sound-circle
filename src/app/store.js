@@ -13,9 +13,12 @@ import { combineReducers } from 'redux';
 import audioMiddleWare from './audio-middleware/audio.middleware';
 import masterClockMiddleware from './masterClock/masterClock.middleware';
 import { soundCirclesReducer } from './soundCircle/soundCirclesReducer';
+import { mouseReducer } from './mouse/mouse.reducer';
+
 
 const rootReducer = combineReducers({
   soundCircles : soundCirclesReducer,
+  mouse : mouseReducer,
 })
 
 

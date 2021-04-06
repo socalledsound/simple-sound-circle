@@ -16,3 +16,15 @@ const importAll = require =>
   export const images2 = importAll(
     require.context("./img/2", false, /\.(png|jpe?g|svg)$/)
   );
+
+  export const images3 = importAll(
+    require.context("./img/2", false, /\.(png|jpe?g|svg)$/)
+  );
+
+  export const images4 = importAll(
+    require.context("./img/2", false, /\.(png|jpe?g|svg)$/)
+  );
+
+  export const images5 = importAll(
+    require.context("./img/2", false, /\.(png|jpe?g|svg)$/)
+  );

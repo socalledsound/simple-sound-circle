@@ -25,8 +25,8 @@ class SoundCircleObject {
         this.sizeScaler = soundCircle.sizeScaler;
         this.stroke = soundCircle.outlineColor;
         this.strokeWidth = soundCircle.strokeWidth;
-        this.volumeControl = new SliderObject(id, 0, x, y, this.size, volumeControl);
-        this.pitchControl = new SliderObject(id, 0, x, y, this.size, pitchControl);
+        this.volumeControl = new SliderObject(id, 90, x, y, this.size, volumeControl);
+        this.pitchControl = new SliderObject(id, 90, x, y, this.size, pitchControl);
         
         // this.rotateControl = new RotateControl(idx, inc, x, y, imageButtonSize);
                 // this.theta = theta;

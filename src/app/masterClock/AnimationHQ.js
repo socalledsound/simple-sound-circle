@@ -1,10 +1,10 @@
 import store from '../store';
-import { getDistance, constrainTheta, getCirclePos, degreesToRadians, radiansToDegrees } from '../../utils';
-import { crowdCircleRadius, crowdCircleRotationSpeed, centerX, centerY } from '../../globalSettings';
+//import { getDistance, constrainTheta, getCirclePos, degreesToRadians, radiansToDegrees } from '../../utils';
+//import { crowdCircleRadius, crowdCircleRotationSpeed, centerX, centerY } from '../../globalSettings';
 import { updateTickTime } from '../masterClock/masterClock.actions';
-import { updateVolume, updatePitch } from '../audio/audio.actions';
-import { incrementTheta } from '../gearAnimationReducer/gearAnimation.actions';
-import { updateImageButton } from '../imageButtonReducer/imageButtons.actions';
+import { updateVolume, updatePitch } from '../audio-middleware/audio.actions';
+// import { incrementTheta } from '../gearAnimationReducer/gearAnimation.actions';
+import { updateSoundCircle } from '../soundCircle/soundCircles.actions';
 
 class AnimationHQ  {
     constructor(){
@@ -22,9 +22,9 @@ class AnimationHQ  {
             // console.log(this.tickTime);
             store.dispatch(updateTickTime(this.tickTime));
 
-            this.animateGears();
-            this.tweakImageButtons();
-            this.rotateImageButtons();
+            // this.animateGears();
+            this.tweakSoundCircles();
+            this.rotateSoundCircles();
 
             this.requestAnimation = window.requestAnimationFrame(ticker);
         }
@@ -35,62 +35,62 @@ class AnimationHQ  {
         }
 
     }
-    animateGears(){
-        const { tweakingIdx } = store.getState().imageButtonsSlice;
-        // console.log(tweakingIdx);
-        const imageButtons = store.getState().imageButtonsSlice.imageButtons;
-        [0,1].forEach(idx => {
-                if(store.getState().gearsAnimation.gearsAnimating[idx] && !tweakingIdx){
-                // store.dispatch(incrementTheta(idx));
-                imageButtons.forEach( imageButton => {
-                    const newImageButton = {...imageButton};
-                    newImageButton.orientationTheta = imageButton.orientationTheta + (crowdCircleRotationSpeed * store.getState().gearsAnimation.direction[idx]);
-                    newImageButton.pos = getCirclePos(centerX + window.innerWidth/4, centerY + window.innerHeight/4, crowdCircleRadius, degreesToRadians(newImageButton.orientationTheta));
-                    newImageButton.volumeControl.rotateWithParent(newImageButton.pos, newImageButton.size, newImageButton.orientationTheta);
-                    newImageButton.pitchControl.rotateWithParent(newImageButton.pos, newImageButton.size, newImageButton.orientationTheta)
-                    store.dispatch(updateImageButton(imageButton.idx, newImageButton));
-                })
-            }
-        })
-    }
+    // animateGears(){
+    //     const { tweakingIdx } = store.getState().imageButtonsSlice;
+    //     // console.log(tweakingIdx);
+    //     const imageButtons = store.getState().imageButtonsSlice.imageButtons;
+    //     [0,1].forEach(idx => {
+    //             if(store.getState().gearsAnimation.gearsAnimating[idx] && !tweakingIdx){
+    //             // store.dispatch(incrementTheta(idx));
+    //             imageButtons.forEach( imageButton => {
+    //                 const newImageButton = {...imageButton};
+    //                 newImageButton.orientationTheta = imageButton.orientationTheta + (crowdCircleRotationSpeed * store.getState().gearsAnimation.direction[idx]);
+    //                 newImageButton.pos = getCirclePos(centerX + window.innerWidth/4, centerY + window.innerHeight/4, crowdCircleRadius, degreesToRadians(newImageButton.orientationTheta));
+    //                 newImageButton.volumeControl.rotateWithParent(newImageButton.pos, newImageButton.size, newImageButton.orientationTheta);
+    //                 newImageButton.pitchControl.rotateWithParent(newImageButton.pos, newImageButton.size, newImageButton.orientationTheta)
+    //         if(!timerStarted){
+    //         initTimer();
+    //     }
 
     getCurrentTime(){
         return this.tickTime
     }
 
-    rotateImageButtons(){
-        const imageButtons = store.getState().imageButtonsSlice.imageButtons;
+    rotateSoundCircles(){
+        const soundCircles = store.getState().soundCircles.soundCircles;
+        // console.log(soundCircles);
+        soundCircles.forEach( soundCircle => {
 
-        imageButtons.forEach( imageButton => {
-
-            const newImageButton = {...imageButton};
-            if(imageButton.rotating) {
+            const newSoundCircle = {...soundCircle};
+            if(soundCircle.rotating) {
                 // console.log(imageButton.rotating);
-                newImageButton.imageTheta += imageButton.pitchControl.val * imageButton.rotateDir;
-                newImageButton.changeImageCounter++;
-                if(newImageButton.changeImageCounter > Math.ceil(6 / imageButton.pitchControl.val)){
-                    newImageButton.imageIdx =  newImageButton.imageIdx = (newImageButton.imageIdx + 1)%newImageButton.numImages;
-                    newImageButton.changeImageCounter = 0;
+                newSoundCircle.imageTheta += soundCircle.pitchControl.val * soundCircle.rotateDir;
+                newSoundCircle.changeImageCounter++;
+                if(newSoundCircle.changeImageCounter > Math.ceil(6 / soundCircle.pitchControl.val)){
+                    newSoundCircle.imageIdx =  newSoundCircle.imageIdx = (newSoundCircle.imageIdx + 1)%newSoundCircle.numImages;
+                    newSoundCircle.changeImageCounter = 0;
                 } 
                 
-                store.dispatch(updateImageButton(imageButton.idx, newImageButton));
+                store.dispatch(updateSoundCircle(soundCircle.idx, newSoundCircle));
             } 
            
         })
     }
 
 
-    tweakImageButtons(){
-        const imageButtons = store.getState().imageButtonsSlice.imageButtons;
-        const { tweakingIdx } = store.getState().imageButtonsSlice;
+    tweakSoundCircles(){
+        const { soundCircles, tweakingIdx}  = store.getState().soundCircles;
+        // console.log(soundCircles);
+        // console.log(soundCircles.soundCircles);
+        //const tweakingIdx  = store.getState().soundCircles.tweakingIdx;
         
         if(tweakingIdx != null){
             // console.log('tweaking');
-            const buttonToUpdate = imageButtons.filter(imageButton => imageButton.idx === tweakingIdx)[0];
+            const buttonToUpdate = soundCircles.filter(soundCircle => soundCircle.idx === tweakingIdx)[0];
             const controlToTweak = buttonToUpdate.tweaking;
-            // console.log('tweaking', controlToTweak);
+             console.log('tweaking', controlToTweak);
             const updatedButton = this.updateTrig(buttonToUpdate, controlToTweak);
-            store.dispatch(updateImageButton(tweakingIdx, updatedButton));
+            store.dispatch(updateSoundCircle(tweakingIdx, updatedButton));
             this.updateAudio(tweakingIdx, controlToTweak.type, controlToTweak.val);
             
         }
